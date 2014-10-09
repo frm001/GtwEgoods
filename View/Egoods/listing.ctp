@@ -16,12 +16,17 @@
 		<thead>
             <?php $colCount = 6?>
 			<tr>
-                <th width='5%'><?php echo $this->Paginator->sort('id'); ?></th>
-                <th width='37%'><?php echo $this->Paginator->sort('title'); ?></th>
+                <th width='3%'><?php echo $this->Paginator->sort('id'); ?></th>
+                <th width='33%'><?php echo $this->Paginator->sort('title'); ?></th>
                 <?php if($this->Session->read('Auth.User.role')=='admin'){?>
                     <th width='15%'><?php echo $this->Paginator->sort('User.first','Added By'); ?></th>
                     <?php $colCount++;?>
                 <?php }?>
+                <?php if($paymentSupport):?>
+                    <th width='8%'><?php echo $this->Paginator->sort('type'); ?></th>
+                    <th width='8%'><?php echo $this->Paginator->sort('price'); ?></th>
+                    <?php $colCount++;$colCount++;?>
+                <?php endif;?>
                 <th width='8%'><?php echo $this->Paginator->sort('egood_download_count','# Download'); ?></th>
                 <th width='5%'><?php echo $this->Paginator->sort('status'); ?></th>
                 <th width='10%'><?php echo $this->Paginator->sort('created', 'Date Added'); ?></th>
@@ -44,6 +49,18 @@
                             <?php if($this->Session->read('Auth.User.role')=='admin'){?>
                                 <td><?php echo $good['User']['first'].' <small>('.$good['User']['email'].')</small>';?></td>
                             <?php }?>
+                            <?php if($paymentSupport):?>
+                                <td class="text-center"><?php echo $type[$good['Egood']['type']]?></td>
+                                <td class="text-right">
+                                    <?php 
+                                        if($good['Egood']['type']){
+                                            echo Configure::read('GtwStripe.currency').' '.$good['Egood']['price'];
+                                        }else{
+                                            echo __('N/A');
+                                        }
+                                    ?>
+                                </td>
+                            <?php endif;?>
                             <td class="text-center"><?php echo $good['Egood']['egood_download_count']?></td>
                             <td><?php echo $status[$good['Egood']['status']]?></td>
                             <td><?php echo $this->Time->format('Y-m-d H:i:s', $good['Egood']['created']); ?></td>

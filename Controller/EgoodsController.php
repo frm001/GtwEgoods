@@ -8,12 +8,17 @@
 class EgoodsController extends AppController {
 	public $name = 'Egoods';
 	public $helpers = array('Text','Time');
-	public $uses = array('GtwEgoods.Egood','GtwEgoods.EgoodDownload');
-	
+	public $uses = array('GtwEgoods.Egood','GtwEgoods.EgoodDownload','GtwEgoods.EgoodSell');
+	public $paymentSupport = false;
     public function beforeFilter(){
         if (CakePlugin::loaded('GtwUsers')){
             $this->layout = 'GtwUsers.users';
         }
+        if (CakePlugin::loaded('GtwStripe')){
+            $this->paymentSupport = true;            
+        }
+        $this->set('paymentSupport',$this->paymentSupport);
+        $this->set('type',$this->Egood->type);
         $this->set('uploadDir',$this->Egood->getPath());
         $this->set('uploadPath',$this->Egood->getUrl());
         $this->Auth->allow('index','view','download','download_count');
@@ -22,7 +27,7 @@ class EgoodsController extends AppController {
     public function index($userId = 0) {
         $this->__getEgoods('frontend',$userId);
 	}
-    public function view($slug=null){
+    public function view($slug=null){             
         $eGoodId = $this->__checkExist($slug);
         $goods = $this->Egood->find('first',array(
                         'fields'=>array(
@@ -38,6 +43,9 @@ class EgoodsController extends AppController {
                             'UserModel'
                         ),
                     ));
+        //Check for Purchase
+        $this->__trackPurchase($goods);
+        $this->set('allowToDownload',$this->EgoodSell->checkSell($this->Session->read('Auth.User.id'),$goods['Egood']['id']));
         $this->set(compact('goods'));
     }
     public function download($slug=null){
@@ -48,11 +56,19 @@ class EgoodsController extends AppController {
                                             'title',
                                             'slug',
                                             'attachement',
-                                            'egood_download_count'
+                                            'egood_download_count',
+                                            'type'
                                         ),
                                         'conditions'=>array('slug' => $slug)
                                     ));
         if(!empty($goods)){
+            if($goods['Egood']['type']!=0 && !$this->EgoodSell->checkSell($this->Session->read('Auth.User.id'),$goods['Egood']['id'])){
+                $this->Session->setFlash(__('Invalid Download'), 'alert', array(
+                                    'plugin' => 'BoostCake',
+                                    'class' => 'alert-danger'
+                                ));
+                $this->redirect($this->referer());  
+            }
             $filePath = $this->Egood->getPath($goods['Egood']['attachement']);
             if(file_exists($filePath) && !is_dir($filePath)){
                 //Add To Download
@@ -174,6 +190,9 @@ class EgoodsController extends AppController {
         $conditions = array();        
         if($type=='frontend'){
             $conditions['Egood.status'] = 1; // Display only active Product
+            if(!$this->paymentSupport){
+                $conditions['Egood.type'] = 0; // Display only active Product    
+            }
         }else{
             $conditions['Egood.status <>'] = 2; //Do not display deleted Goods
             //Display User's Goods if not admin
@@ -197,6 +216,8 @@ class EgoodsController extends AppController {
                     'Egood.title',
                     'Egood.photo',                    
                     'Egood.egood_download_count',
+                    'Egood.type',
+                    'Egood.price',
                     'Egood.slug',
                     'Egood.status',
                     'Egood.created',
@@ -214,5 +235,51 @@ class EgoodsController extends AppController {
 		);
 		$this->set('goods', $this->paginate('Egood'));
         $this->set('status',$this->Egood->status);
+    }
+    public function transaction(){
+         $conditions = array();        
+        $conditions['Egood.status'] = 1; // Display only active Product
+        $conditions['EgoodSell.user_id'] = $this->Session->read('Auth.User.id');
+        $this->paginate = array(
+			'EgoodSell' => array(
+                'fields'=>array(
+                    'EgoodSell.*',
+                    'Egood.id',
+                    'Egood.title',
+                    'Egood.photo',                    
+                    'Egood.price',
+                    'Egood.slug',
+                    'Transaction.amount',
+                    'Transaction.brand',
+                    'Transaction.last4',
+                ),
+				'conditions' => $conditions,
+				'contain' => array(
+					'UserModel'
+				),
+				'order' => 'Egood.created DESC'
+			)
+		);
+		$this->set('sells', $this->paginate('EgoodSell'));
+    }
+    private function __trackPurchase($goods = array()){
+        if($this->paymentSupport){
+            if(!empty($this->request->named['transaction'])){
+                $this->Transac = $this->Components->load('GtwStripe.Transac');
+                $transaction = $this->Transac->getLastTransaction($this->request->named['transaction']);
+                if(!empty($transaction)){
+                    $this->EgoodSell->addToSell($transaction['Transaction'],$goods['Egood']['id']);
+                     $this->Session->setFlash(__('Thank you for buy "<b>%s</b>", Now you can download it from this page or from your My Account section',$goods['Egood']['title']), 'alert', array(
+                        'plugin' => 'BoostCake',
+                        'class' => 'alert-success'
+                    ));
+                }else{
+                    $this->Session->setFlash(__('Unable to process your payment request, Please try again'), 'alert', array(
+                    'plugin' => 'BoostCake',
+                    'class' => 'alert-danger'
+                )); 
+                }
+            }
+        }
     }
 }

@@ -33,6 +33,10 @@ class Egood extends AppModel {
                         0 => 'Inactive',
                         //2 => 'Deleted',
                     );
+    public $type = array(
+                        1 => 'Paid' ,
+                        0 => 'Free',
+                    );
     
     function beforeSave($options = array()) {
         parent::beforeSave($options);

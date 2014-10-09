@@ -4,6 +4,9 @@
  * @author    Philippe Lafrance
  * @link      http://gintonicweb.com
  */
+if($paymentSupport){
+    $this->Helpers->load('GtwStripe.Stripe');
+}
 ?>
 <div class="panel panel-default">
 	<div class="panel-heading">
@@ -54,9 +57,24 @@
                                 </div>
                                 <div class="clearfix"></div>
                                 <hr>
-                                <div class="button">
-                                    <?php echo $this->Html->actionBtn(__('View Detail'), 'view',array($good['Egood']['slug']),'btn-primary btn-block btn-sm')?>
-                                </div>
+                                <?php if($paymentSupport){?>
+                                    <div class="item-price pull-left">
+                                        <?php 
+                                            if($good['Egood']['type']){
+                                                echo $this->Stripe->showPrice($good['Egood']['price']);
+                                            }else{
+                                                echo $type[$good['Egood']['type']];
+                                            }
+                                        ?>
+                                    </div>
+                                    <div class="button pull-right">
+                                        <?php echo $this->Html->actionBtn(__('View Detail'), 'view',array($good['Egood']['slug']),'btn-primary btn-sm')?>
+                                    </div>
+                                <?php }else{?>
+                                    <div class="button">
+                                        <?php echo $this->Html->actionBtn(__('View Detail'), 'view',array($good['Egood']['slug']),'btn-primary btn-sm btn-block')?>
+                                    </div>
+                                <?php }?>                                
                                 <div class="clearfix"></div>
                             </div>
                         </div>
