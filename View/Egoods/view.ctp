@@ -4,7 +4,9 @@
  * @author    Philippe Lafrance
  * @link      http://gintonicweb.com
  */
- 
+if($paymentSupport){
+    $this->Helpers->load('GtwStripe.Stripe');
+} 
 $this->Helpers->load('GtwRequire.GtwRequire');
 echo $this->GtwRequire->req($this->Html->url('/',true).'GtwEgoods/js/egoods.js');
 ?>
@@ -38,6 +40,14 @@ echo $this->GtwRequire->req($this->Html->url('/',true).'GtwEgoods/js/egoods.js')
                 <div class="form-group">
                     <h3><?php echo $goods['Egood']['title']?></h3>
                 </div>
+                <?php if($paymentSupport && $goods['Egood']['type']){?>
+                    <div class="form-group">
+                        <?php                                                 
+                            echo __("Price ");
+                            echo $this->Stripe->showPrice($goods['Egood']['price']);
+                        ?>
+                    </div>
+                <?php }?>
                 <div class="form-group" id="egood_download_count" data-url="<?php echo $this->Html->url(array('controller'=>'egoods','action'=>'download_count',$goods['Egood']['slug']));?>">
                     <?php echo $this->element('GtwEgoods.downloadCount',array('egood_download_count'=>$goods['Egood']['egood_download_count']));?> 
                 </div>
@@ -51,7 +61,20 @@ echo $this->GtwRequire->req($this->Html->url('/',true).'GtwEgoods/js/egoods.js')
                     <?php echo __("Added on ").$goods['Egood']['modified']?>
                 </div>                
                 <div class="form-group">
-                    <?php echo $this->Html->actionIconBtn('fa fa-download', __(' Download now'), 'download',array($goods['Egood']['slug']),'btn-danger');?>
+                    <?php 
+                        if($paymentSupport && $goods['Egood']['type']==1 && empty($allowToDownload)){
+              				echo $this->element('GtwStripe.one_time_fix_payment',array('options'=>array(
+																				'description'=>$goods['Egood']['title'],
+																				'amount'=>$goods['Egood']['price'],
+																				'label'=>__('Buy Now'),
+																				'success-url'=>$this->Html->url(array('plugin'=>'gtw_egoods','action'=>'view',$goods['Egood']['slug'],'type'=>'success'),true),
+																				'fail-url'=>$this->Html->url(array('plugin'=>'gtw_egoods','action'=>'view',$goods['Egood']['slug'],'type'=>'fail'),true),
+																	)));
+                            //echo $this->Html->actionIconBtn('fa fa-shopping-cart', __(' Buy now'), 'buy',array($goods['Egood']['slug']),'btn-danger');
+                        }else{
+                            echo $this->Html->actionIconBtn('fa fa-download', __(' Download now'), 'download',array($goods['Egood']['slug']),'btn-danger');
+                        }
+                    ?>
                 </div>
                 <div class="form-group">
                     <?php echo $goods['Egood']['description']?>
