@@ -8,6 +8,7 @@ if($paymentSupport):
         'legend'=>false
     ));
     echo $this->Form->input('price',array(
+    		'default' => 0,
             'min'=>0,
             'div' =>array('class'=>'col-md-12 form-group egood-price')
     ));
