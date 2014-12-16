@@ -102,8 +102,11 @@ class EgoodsController extends AppController {
         $this->set(compact('goods'));
     }
 
-    public function listing() {
-        $this->__getEgoods('backend');
+    public function listing($userId = 0) {
+    	if($this->Session->read('Auth.User.role') != 'admin'){
+    		$userId = 0;
+    	}
+        $this->__getEgoods('backend', $userId);
 	}    
     public function add(){
         if ($this->request->is('post') || $this->request->is('put')) {
@@ -281,5 +284,37 @@ class EgoodsController extends AppController {
                 }
             }
         }
+    }
+    
+    /* To show list of all downloaded Egoods by user*/
+    public function library(){
+    	$conditions = array();
+    	$conditions['Egood.status'] = 1; // Display only active Product
+    	$conditions['EgoodDownload.user_id'] = $this->Session->read('Auth.User.id');
+    	$this->paginate = array(
+    			'EgoodDownload' => array(
+    					'fields'=>array(
+    							'EgoodDownload.*',
+    							'Egood.id',
+			                    'Egood.user_id',
+			                    'Egood.title',
+			                    'Egood.photo',                    
+			                    'Egood.egood_download_count',
+			                    'Egood.type',
+			                    'Egood.price',
+			                    'Egood.slug',
+			                    'Egood.status',
+			                    'Egood.created',
+			                    'Egood.modified'
+    					),
+    					'conditions' => $conditions,
+    					'contain' => array(
+    							'UserModel'
+    					),
+    					'group' => array('EgoodDownload.egood_id'),
+    					'order' => 'Egood.created DESC'
+    			)
+    	);
+    	$this->set('downloads', $this->paginate('EgoodDownload'));
     }
 }
