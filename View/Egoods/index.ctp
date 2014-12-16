@@ -9,8 +9,8 @@ if($paymentSupport){
 }
 ?>
 <div class="panel panel-default">
-	<div class="panel-heading">
-		<div class="row">
+    <div class="panel-heading">
+        <div class="row">
             <div class="col-md-8">
                 <h3 class="title">
                     <?php echo __('E-Goods');?>
@@ -24,8 +24,8 @@ if($paymentSupport){
                 </h3>
             </div>
             <div class="col-md-4 text-right"></div>
-		</div>
-	</div>
+        </div>
+    </div>
     <div class="panel-body items">
         <div class="row">
             <?php if(empty($goods)):?>
@@ -39,13 +39,13 @@ if($paymentSupport){
                             <!-- Item image -->
                             <div class="item-image">
                                 <?php 
-									if(file_exists($uploadDir.$good['Egood']['photo']) && !is_dir($uploadDir.$good['Egood']['photo'])){
-										$photo = $uploadPath.$good['Egood']['photo'];
-									}else{
-										$photo = "GtwEgoods.no_image.gif";
-									}
-									echo $this->Html->image($photo,array('url'=>array('controller'=>'egoods','action'=>'view',$good['Egood']['slug'])));
-								?>
+                                    if(file_exists($uploadDir.$good['Egood']['photo']) && !is_dir($uploadDir.$good['Egood']['photo'])){
+                                        $photo = $uploadPath.$good['Egood']['photo'];
+                                    }else{
+                                        $photo = "GtwEgoods.no_image.gif";
+                                    }
+                                    echo $this->Html->image($photo,array('url'=>array('controller'=>'egoods','action'=>'view',$good['Egood']['slug'])));
+                                ?>
                             </div>
                             <!-- Item details -->
                             <div class="item-details">
