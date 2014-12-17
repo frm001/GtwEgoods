@@ -18,7 +18,11 @@ echo $this->GtwRequire->req($this->Html->url('/',true).'GtwEgoods/js/egoods.js')
     <div class="panel-body gtw-egoods">
         <?php echo $this->Form->create('Egood', array('type'=>'file','inputDefaults' => array('div' => 'col-md-12 form-group','class' => 'form-control'),'class' => 'form-horizontal','id'=>'EGoodAddEditForm', 'novalidate'=>'novalidate')); ?>
         <div class="row">
-            <div class="col-md-12">                
+            <div class="col-md-12">
+				<?php echo $this->Form->input('egood_category_id',array(
+                    'type'=>'select',
+                    'options'=>$egoodCategories
+                )); ?>              
                 <?php echo $this->Form->input('title',array(
                     'type'=>'text'
                 )); ?>

@@ -53,6 +53,14 @@ echo $this->GtwRequire->req($this->Html->url('/', true) . 'GtwEgoods/js/egoods.j
                 </div>
                 <div class="form-group">
                     <?php
+                    echo __("Category : ");
+                    if(!empty($goods['EgoodCategory']['name'])){
+						echo $this->Html->link($goods['EgoodCategory']['name'], array('controller' => 'egoods', 'action' => 'index',0,$goods['EgoodCategory']['id']));
+					}
+                    ?>
+                </div>
+                <div class="form-group">
+                    <?php
                     echo __("Added by ");
                     echo $this->Html->link($goods['User']['first'] . ' ' . $goods['User']['last'], array('controller' => 'egoods', 'action' => 'index', $goods['User']['id']));
                     ?>

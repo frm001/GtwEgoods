@@ -22,6 +22,7 @@
                     <th width='15%'><?php echo $this->Paginator->sort('User.first','Added By'); ?></th>
                     <?php $colCount++;?>
                 <?php }?>
+                <th width='15%'><?php echo $this->Paginator->sort('EgoodCategory.name','Category'); ?></th>
                 <?php if($paymentSupport):?>
                     <th width='8%'><?php echo $this->Paginator->sort('type'); ?></th>
                     <th width='8%'><?php echo $this->Paginator->sort('price'); ?></th>
@@ -49,6 +50,7 @@
                             <?php if($this->Session->read('Auth.User.role')=='admin'){?>
                                 <td><?php echo $good['User']['first'].' <small>('.$good['User']['email'].')</small>';?></td>
                             <?php }?>
+                            <td class="text-center"><?php echo !empty($good['EgoodCategory']['name'])?$good['EgoodCategory']['name']:'No Category Available'?></td>
                             <?php if($paymentSupport):?>
                                 <td class="text-center"><?php echo $type[$good['Egood']['type']]?></td>
                                 <td class="text-right">

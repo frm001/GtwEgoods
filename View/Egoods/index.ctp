@@ -18,7 +18,9 @@ if($paymentSupport){
                         <?php 
                             if(!empty($user)){
                                 echo $user['User']['first'].' '.$user['User']['last'];
-                            }
+                            } elseif(!empty($egoodCategory)){
+								echo 'in '.$egoodCategory['EgoodCategory']['name'] .' Category';
+							}
                         ?>
                     </small>
                 </h3>
@@ -52,6 +54,7 @@ if($paymentSupport){
                                 <h5>
                                     <?php echo $this->Html->link($good['Egood']['title'],array('controller'=>'egoods','action'=>'view',$good['Egood']['slug']));?>                                    
                                 </h5>
+                                <div class="category-details"><?php echo (empty($good['EgoodCategory']['name'])?' ':$good['EgoodCategory']['name'])?></div>
                                 <div class="text-center">
                                     <?php echo $this->element('GtwEgoods.downloadCount',array('egood_download_count'=>$good['Egood']['egood_download_count']));?> 
                                 </div>

@@ -21,7 +21,14 @@ class Egood extends AppModel {
             )           
         )
     );
-    public $belongsTo = 'User';
+    public $belongsTo = array(
+			'User',
+	        'EgoodCategory' => array(
+				'className' => 'EgoodCategory',
+				'foreignKey' => 'egood_category_id',
+				'counterCache' => true
+				)
+			);
     var $hasMany = array(
         'EgoodDownload' => array(
             'className' => 'EgoodDownload',
@@ -104,7 +111,9 @@ class Egood extends AppModel {
                                 'Egood.*','User.id',
                                 'User.first',
                                 'User.last',
-                                'User.email'
+                                'User.email',
+                                'EgoodCategory.id',
+								'EgoodCategory.name',
                         ),
                         'conditions'=>array(
                             'Egood.id' =>$eGoodId
@@ -117,7 +126,7 @@ class Egood extends AppModel {
     
     public function getDownloadCount($slug)
     {
-        return $this->Egood->find('first',array(
+        return $this->find('first',array(
                             'fields'=>array(
                                 'id',                                       
                                 'egood_download_count'

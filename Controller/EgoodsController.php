@@ -9,7 +9,7 @@ class EgoodsController extends AppController
 {
     public $name = 'Egoods';
     public $helpers = array('Text','Time');
-    public $uses = array('GtwEgoods.Egood','GtwEgoods.EgoodDownload','GtwEgoods.EgoodSell');
+    public $uses = array('GtwEgoods.Egood','GtwEgoods.EgoodDownload','GtwEgoods.EgoodSell','GtwEgoods.EgoodCategory');
     public $paymentSupport = false;
     public function beforeFilter()
     {
@@ -26,9 +26,9 @@ class EgoodsController extends AppController
         $this->Auth->allow('index','view','download','download_count');
     }
     
-    public function index($userId = 0)
+    public function index($userId = 0, $egoodCategoryId = 0)
     {
-        $this->__getEgoods('frontend',$userId);
+        $this->__getEgoods('frontend',$userId, $egoodCategoryId);
     }
     public function view($slug=null)
     {
@@ -101,6 +101,7 @@ class EgoodsController extends AppController
                     'plugin' => 'BoostCake',
                     'class' => 'alert-success'
                 ));
+                $this->EgoodCategory->recursive = -1;
                 return $this->redirect(array('action' => 'listing'));
             }
             $this->Session->setFlash(__('Unable to add e-good. Please, try again.'), 'alert', array(
@@ -108,6 +109,8 @@ class EgoodsController extends AppController
                     'class' => 'alert-danger'
                 ));
         }
+        $egoodCategories = $this->EgoodCategory->find('list',array('fields'=>array('EgoodCategory.id','EgoodCategory.name')));
+        $this->set('egoodCategories',$egoodCategories);
         $this->set('status',$this->Egood->status);
     }
     public function edit($slug=null)
@@ -127,6 +130,8 @@ class EgoodsController extends AppController
                     'class' => 'alert-danger'
                 ));
         } else {
+			$egoodCategories = $this->EgoodCategory->find('list',array('fields'=>array('EgoodCategory.id','EgoodCategory.name')));
+			$this->set('egoodCategories',$egoodCategories);
             $this->request->data = $this->Egood->read(null, $eGoodId);
         }        
         $this->set('status',$this->Egood->status);        
@@ -178,7 +183,7 @@ class EgoodsController extends AppController
         }
         return $eGood['Egood']['id'];
     }
-    private function __getEgoods($type='frontend',$userId = 0)
+    private function __getEgoods($type='frontend',$userId = 0, $egoodCategoryId = 0)
     {
         $conditions = array();        
         if($type=='frontend'){
@@ -200,14 +205,22 @@ class EgoodsController extends AppController
                                                         'recursive'=>-1,
                                                 )));
             $conditions['Egood.user_id'] = $userId; // Display User's E-good
-        }
+        } elseif(!empty($egoodCategoryId)){
+			$this->set('egoodCategory',$this->EgoodCategory->find('first',array(
+                                                        'fields'=>array('id','name'),
+                                                        'conditions'=>array('id'=>$egoodCategoryId),
+                                                        'recursive'=>-1,
+                                                )));
+			$conditions['Egood.egood_category_id'] = $egoodCategoryId; // Display Only Selected Category
+		}
         $this->paginate = array(
             'Egood' => array(
                 'fields'=>array(
                     'Egood.id',
                     'Egood.user_id',
                     'Egood.title',
-                    'Egood.photo',                    
+                    'Egood.photo',
+                    'Egood.egood_category_id',
                     'Egood.egood_download_count',
                     'Egood.type',
                     'Egood.price',
@@ -218,10 +231,13 @@ class EgoodsController extends AppController
                     'User.id',
                     'User.first',
                     'User.email',
+                    'EgoodCategory.id',
+                    'EgoodCategory.name',
                 ),
                 'conditions' => $conditions,
                 'contain' => array(
-                    'UserModel'
+                    'UserModel',
+                    'EgoodCategoryModel'
                 ),
                 'order' => 'Egood.created DESC'
             )
