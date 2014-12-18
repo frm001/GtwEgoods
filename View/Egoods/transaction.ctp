@@ -7,41 +7,41 @@
  $this->Helpers->load('GtwStripe.Stripe');
 ?>
 <div class="panel panel-default">
-	<div class="panel-heading">
-		<div class="row">
+    <div class="panel-heading">
+        <div class="row">
             <div class="col-md-8"><h3 class="title"><?php echo __('My Transaction');?></h3></div>
             <div class="col-md-4 text-right"></div>
-		</div>
-	</div>    
+        </div>
+    </div>    
     <table class="table table-hover table-striped table-bordered">
-		<thead>
-			<tr>
+        <thead>
+            <tr>
                 <th width='55%'><?php echo $this->Paginator->sort('title'); ?></th>
-				<th width='15%' class='text-right'><?php echo $this->Paginator->sort('price'); ?></th>
+                <th width='15%' class='text-right'><?php echo $this->Paginator->sort('price'); ?></th>
                 <th width='15%'><?php echo $this->Paginator->sort('created', __('Purchase Date')); ?></th>
-				<th width='15%' class='text-center'>Action</th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php if(empty($sells)){?>
-				<tr>
-					<td colspan='4' class='text-warning'><?php echo __('No record found.')?></td>
-				</tr>
-			<?php 
+                <th width='15%' class='text-center'>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if(empty($sells)){?>
+                <tr>
+                    <td colspan='4' class='text-warning'><?php echo __('No record found.')?></td>
+                </tr>
+            <?php 
                 }else{
                     foreach ($sells as $sell){
             ?>
                         <tr>
                             <td><?php echo $sell['Egood']['title'];?></td>                          
-							<td class="text-right">
-								<?php echo $this->Stripe->showPrice($sell['Transaction']['amount']);?>
-							</td>
+                            <td class="text-right">
+                                <?php echo $this->Stripe->showPrice($sell['Transaction']['amount']);?>
+                            </td>
                             <td><?php echo $this->Time->format('Y-m-d H:i:s', $sell['EgoodSell']['created']); ?></td>
                             <td class="text-center actions">
                                 <?php 
                                     echo $this->Html->actionIcon('fa fa-th', 'view', $sell['Egood']['slug']);
                                     echo '&nbsp|&nbsp';
-									echo $this->Html->actionIcon('fa fa-download', 'download', $sell['Egood']['slug']);
+                                    echo $this->Html->actionIcon('fa fa-download', 'download', $sell['Egood']['slug']);
                                 ?>
                             </td>
                         </tr>
@@ -49,6 +49,6 @@
                     }
                 }
             ?>
-		</tbody>
-	</table>	
+        </tbody>
+    </table>    
 </div>
