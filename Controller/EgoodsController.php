@@ -9,8 +9,14 @@ class EgoodsController extends AppController
 {
     public $name = 'Egoods';
     public $helpers = array('Text','Time');
-    public $uses = array('GtwEgoods.Egood','GtwEgoods.EgoodDownload','GtwEgoods.EgoodSell','GtwEgoods.EgoodCategory');
+    public $uses = array(
+        'GtwEgoods.Egood',
+        'GtwEgoods.EgoodDownload',
+        'GtwEgoods.EgoodSell',
+        'GtwEgoods.EgoodCategory'
+    );
     public $paymentSupport = false;
+
     public function beforeFilter()
     {
         if (CakePlugin::loaded('GtwUsers')){
@@ -30,46 +36,53 @@ class EgoodsController extends AppController
     {
         $this->__getEgoods('frontend',$userId, $egoodCategoryId);
     }
+
     public function view($slug=null)
     {
         $eGoodId = $this->__checkExist($slug);
         $goods = $this->Egood->getEgoodById($eGoodId);
+
         //Check for Purchase
         $this->__trackPurchase($goods);
-        $this->set('allowToDownload',$this->EgoodSell->checkSell($this->Session->read('Auth.User.id'),$goods['Egood']['id']));
-        $this->set(compact('goods'));
+        $allowToDownload = $this->EgoodSell->checkSell(
+            $this->Session->read('Auth.User.id'),
+            $goods['Egood']['id']
+        );
+        $this->set(compact('goods','allowToDownload');
     }
+
     public function download($slug=null)
     {
         $this->Egood->recursive = -1;
         $goods = $this->Egood->find('first',array(
-                                        'fields'=>array(
-                                            'id',
-                                            'title',
-                                            'slug',
-                                            'attachement',
-                                            'egood_download_count',
-                                            'type'
-                                        ),
-                                        'conditions'=>array('slug' => $slug)
-                                    ));
+            'fields'=>array(
+                'id',
+                'title',
+                'slug',
+                'attachement',
+                'egood_download_count',
+                'type'
+            ),
+            'conditions'=>array('slug' => $slug)
+        ));
         if(!empty($goods)){
             if($goods['Egood']['type']!=0 && !$this->EgoodSell->checkSell($this->Session->read('Auth.User.id'),$goods['Egood']['id'])){
                 $this->Session->setFlash(__('Invalid Download'), 'alert', array(
-                                    'plugin' => 'BoostCake',
-                                    'class' => 'alert-danger'
-                                ));
+                    'plugin' => 'BoostCake',
+                    'class' => 'alert-danger'
+                ));
                 $this->redirect($this->referer());  
             }
             $filePath = $this->Egood->getPath($goods['Egood']['attachement']);
             if(file_exists($filePath) && !is_dir($filePath)){
                 //Add To Download
                 $download = array(
-                                'EgoodDownload'=>array(
-                                   'user_id'   => $this->Session->check('Auth.User.id')?$this->Session->read('Auth.User.id'):0,
-                                   'egood_id'  => $goods['Egood']['id'],
-                                   'ip'        => env('REMOTE_ADDR'),
-                                ));
+                    'EgoodDownload'=>array(
+                        'user_id'   => $this->Session->check('Auth.User.id')?$this->Session->read('Auth.User.id'):0,
+                        'egood_id'  => $goods['Egood']['id'],
+                        'ip'        => env('REMOTE_ADDR'),
+                    )
+                );
                 $this->EgoodDownload->save($download);
                 $this->autoRender = false;
                 return $this->response->file($filePath, array('download' => true));
@@ -77,11 +90,12 @@ class EgoodsController extends AppController
             }
         }
         $this->Session->setFlash(__('File Not Found'), 'alert', array(
-                                    'plugin' => 'BoostCake',
-                                    'class' => 'alert-danger'
-                                ));
+            'plugin' => 'BoostCake',
+            'class' => 'alert-danger'
+        ));
         $this->redirect($this->referer());        
     }
+
     public function download_count($slug =null)
     {
         $this->layout = 'ajax';
@@ -90,11 +104,12 @@ class EgoodsController extends AppController
     }
 
     public function listing($userId = 0) {
-    	if($this->Session->read('Auth.User.role') != 'admin'){
-    		$userId = 0;
-    	}
+        if($this->Session->read('Auth.User.role') != 'admin'){
+            $userId = 0;
+        }
         $this->__getEgoods('backend', $userId);
-    }    
+    }
+
     public function add()
     {
         if ($this->request->is('post') || $this->request->is('put')) {
@@ -108,14 +123,15 @@ class EgoodsController extends AppController
                 return $this->redirect(array('action' => 'listing'));
             }
             $this->Session->setFlash(__('Unable to add e-good. Please, try again.'), 'alert', array(
-                    'plugin' => 'BoostCake',
-                    'class' => 'alert-danger'
-                ));
+                'plugin' => 'BoostCake',
+                'class' => 'alert-danger'
+            ));
         }
         $egoodCategories = $this->EgoodCategory->find('list',array('fields'=>array('EgoodCategory.id','EgoodCategory.name')));
         $this->set('egoodCategories',$egoodCategories);
         $this->set('status',$this->Egood->status);
     }
+
     public function edit($slug=null)
     {
         $eGoodId = $this->__checkExist($slug);
@@ -129,12 +145,12 @@ class EgoodsController extends AppController
                 return $this->redirect(array('action' => 'listing'));
             }
             $this->Session->setFlash(__('The e-good could not be saved. Please, try again.'), 'alert', array(
-                    'plugin' => 'BoostCake',
-                    'class' => 'alert-danger'
-                ));
+                'plugin' => 'BoostCake',
+                'class' => 'alert-danger'
+            ));
         } else {
-			$egoodCategories = $this->EgoodCategory->find('list',array('fields'=>array('EgoodCategory.id','EgoodCategory.name')));
-			$this->set('egoodCategories',$egoodCategories);
+            $egoodCategories = $this->EgoodCategory->find('list',array('fields'=>array('EgoodCategory.id','EgoodCategory.name')));
+            $this->set('egoodCategories',$egoodCategories);
             $this->request->data = $this->Egood->read(null, $eGoodId);
         }        
         $this->set('status',$this->Egood->status);        
@@ -209,13 +225,13 @@ class EgoodsController extends AppController
                                                 )));
             $conditions['Egood.user_id'] = $userId; // Display User's E-good
         } elseif(!empty($egoodCategoryId)){
-			$this->set('egoodCategory',$this->EgoodCategory->find('first',array(
+            $this->set('egoodCategory',$this->EgoodCategory->find('first',array(
                                                         'fields'=>array('id','name'),
                                                         'conditions'=>array('id'=>$egoodCategoryId),
                                                         'recursive'=>-1,
                                                 )));
-			$conditions['Egood.egood_category_id'] = $egoodCategoryId; // Display Only Selected Category
-		}
+            $conditions['Egood.egood_category_id'] = $egoodCategoryId; // Display Only Selected Category
+        }
         $this->paginate = array(
             'Egood' => array(
                 'fields'=>array(
@@ -248,6 +264,7 @@ class EgoodsController extends AppController
         $this->set('goods', $this->paginate('Egood'));
         $this->set('status',$this->Egood->status);
     }
+
     public function transaction()
     {
         $conditions = array();        
@@ -275,6 +292,7 @@ class EgoodsController extends AppController
         );
         $this->set('sells', $this->paginate('EgoodSell'));
     }
+
     private function __trackPurchase($goods = array())
     {
         if($this->paymentSupport){
@@ -283,7 +301,7 @@ class EgoodsController extends AppController
                 $transaction = $this->Transac->getLastTransaction($this->request->named['transaction']);
                 if(!empty($transaction)){
                     $this->EgoodSell->addToSell($transaction['Transaction'],$goods['Egood']['id']);
-                     $this->Session->setFlash(__('Thank you for buy "<b>%s</b>", Now you can download it from this page or from your My Account section',$goods['Egood']['title']), 'alert', array(
+                     $this->Session->setFlash( __('Thank you for purchasing "<b>%s</b>", Now you can download it from this page or from your "My Account" section', $goods['Egood']['title']), 'alert', array(
                         'plugin' => 'BoostCake',
                         'class' => 'alert-success'
                     ));
@@ -298,34 +316,35 @@ class EgoodsController extends AppController
     }
     
     /* To show list of all downloaded Egoods by user*/
-    public function library(){
-    	$conditions = array();
-    	$conditions['Egood.status'] = 1; // Display only active Product
-    	$conditions['EgoodDownload.user_id'] = $this->Session->read('Auth.User.id');
-    	$this->paginate = array(
-    			'EgoodDownload' => array(
-    					'fields'=>array(
-    							'EgoodDownload.*',
-    							'Egood.id',
-			                    'Egood.user_id',
-			                    'Egood.title',
-			                    'Egood.photo',                    
-			                    'Egood.egood_download_count',
-			                    'Egood.type',
-			                    'Egood.price',
-			                    'Egood.slug',
-			                    'Egood.status',
-			                    'Egood.created',
-			                    'Egood.modified'
-    					),
-    					'conditions' => $conditions,
-    					'contain' => array(
-    							'UserModel'
-    					),
-    					'group' => array('EgoodDownload.egood_id'),
-    					'order' => 'Egood.created DESC'
-    			)
-    	);
-    	$this->set('downloads', $this->paginate('EgoodDownload'));
+    public function library()
+    {
+        $conditions = array();
+        $conditions['Egood.status'] = 1; // Display only active Product
+        $conditions['EgoodDownload.user_id'] = $this->Session->read('Auth.User.id');
+        $this->paginate = array(
+            'EgoodDownload' => array(
+                'fields'=>array(
+                    'EgoodDownload.*',
+                    'Egood.id',
+                    'Egood.user_id',
+                    'Egood.title',
+                    'Egood.photo',                    
+                    'Egood.egood_download_count',
+                    'Egood.type',
+                    'Egood.price',
+                    'Egood.slug',
+                    'Egood.status',
+                    'Egood.created',
+                    'Egood.modified'
+                ),
+                'conditions' => $conditions,
+                'contain' => array(
+                    'UserModel'
+                ),
+                'group' => array('EgoodDownload.egood_id'),
+                'order' => 'Egood.created DESC'
+            )
+        );
+        $this->set('downloads', $this->paginate('EgoodDownload'));
     }
 }
