@@ -9,8 +9,8 @@ if($paymentSupport){
 }
 ?>
 <div class="panel panel-default">
-	<div class="panel-heading">
-		<div class="row">
+    <div class="panel-heading">
+        <div class="row">
             <div class="col-md-8">
                 <h3 class="title">
                     <?php echo __('E-Goods');?>
@@ -18,14 +18,16 @@ if($paymentSupport){
                         <?php 
                             if(!empty($user)){
                                 echo $user['User']['first'].' '.$user['User']['last'];
-                            }
+                            } elseif(!empty($egoodCategory)){
+								echo 'in '.$egoodCategory['EgoodCategory']['name'] .' Category';
+							}
                         ?>
                     </small>
                 </h3>
             </div>
             <div class="col-md-4 text-right"></div>
-		</div>
-	</div>
+        </div>
+    </div>
     <div class="panel-body items">
         <div class="row">
             <?php if(empty($goods)):?>
@@ -39,19 +41,20 @@ if($paymentSupport){
                             <!-- Item image -->
                             <div class="item-image">
                                 <?php 
-									if(file_exists($uploadDir.$good['Egood']['photo']) && !is_dir($uploadDir.$good['Egood']['photo'])){
-										$photo = $uploadPath.$good['Egood']['photo'];
-									}else{
-										$photo = "GtwEgoods.no_image.gif";
-									}
-									echo $this->Html->image($photo,array('url'=>array('controller'=>'egoods','action'=>'view',$good['Egood']['slug'])));
-								?>
+                                    if(file_exists($uploadDir.$good['Egood']['photo']) && !is_dir($uploadDir.$good['Egood']['photo'])){
+                                        $photo = $uploadPath.$good['Egood']['photo'];
+                                    }else{
+                                        $photo = "GtwEgoods.no_image.gif";
+                                    }
+                                    echo $this->Html->image($photo,array('url'=>array('controller'=>'egoods','action'=>'view',$good['Egood']['slug'])));
+                                ?>
                             </div>
                             <!-- Item details -->
                             <div class="item-details">
                                 <h5>
                                     <?php echo $this->Html->link($good['Egood']['title'],array('controller'=>'egoods','action'=>'view',$good['Egood']['slug']));?>                                    
                                 </h5>
+                                <div class="category-details"><?php echo (empty($good['EgoodCategory']['name'])?' ':$good['EgoodCategory']['name'])?></div>
                                 <div class="text-center">
                                     <?php echo $this->element('GtwEgoods.downloadCount',array('egood_download_count'=>$good['Egood']['egood_download_count']));?> 
                                 </div>
