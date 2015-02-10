@@ -48,7 +48,7 @@ class EgoodsController extends AppController
             $this->Session->read('Auth.User.id'),
             $goods['Egood']['id']
         );
-        $this->set(compact('goods','allowToDownload');
+        $this->set(compact('goods','allowToDownload'));
     }
 
     public function download($slug=null)
