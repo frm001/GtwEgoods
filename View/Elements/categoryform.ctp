@@ -15,6 +15,7 @@
                         'type'=>'text'
                     )); 
                     echo $this->Form->input('description',array(
+                    	'label' => __d('gtw_egoods','Description'),
                         'class' =>'wysiwyg',
                         'style' => 'width:100%;height:60px;',
                     ));
@@ -23,7 +24,7 @@
                         'class' => 'btn btn-primary'
                     )); 
                     echo "&nbsp;";
-                    echo $this->Html->actionBtn(__('Cancel'), 'index'); 
+                    echo $this->Html->actionBtn(__d('gtw_egoods','Cancel'), 'index'); 
                 echo $this->Form->end();
             ?>
         </div>            

@@ -1,0 +1,310 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2015-03-06 14:38-0500\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: Controller/EgoodCategoriesController.php:28
+msgid "The egood category has been created successfully"
+msgstr ""
+
+#: Controller/EgoodCategoriesController.php:34
+msgid "Unable to create egood category. Please, try again."
+msgstr ""
+
+#: Controller/EgoodCategoriesController.php:66
+msgid "Egood category has been deleted successfully"
+msgstr ""
+
+#: Controller/EgoodCategoriesController.php:73
+msgid "Unable to delete egood category, Please try again"
+msgstr ""
+
+#: Controller/EgoodsController.php:70
+msgid "Invalid Download"
+msgstr ""
+
+#: Controller/EgoodsController.php:92
+msgid "File Not Found"
+msgstr ""
+
+#: Controller/EgoodsController.php:118
+msgid "The e-good has been created successfully"
+msgstr ""
+
+#: Controller/EgoodsController.php:125
+msgid "Unable to add e-good. Please, try again."
+msgstr ""
+
+#: Controller/EgoodsController.php:141
+msgid "The e-good has been saved"
+msgstr ""
+
+#: Controller/EgoodsController.php:147
+msgid "The e-good could not be saved. Please, try again."
+msgstr ""
+
+#: Controller/EgoodsController.php:163
+msgid "E-Good has been deleted successfully"
+msgstr ""
+
+#: Controller/EgoodsController.php:168
+msgid "Unable to delete e-good, Please try again"
+msgstr ""
+
+#: Controller/EgoodsController.php:181
+msgid "Comment status has been successfully changed to %s"
+msgstr ""
+
+#: Controller/EgoodsController.php:186
+msgid "Invalid Type, Pleae try again"
+msgstr ""
+
+#: Controller/EgoodsController.php:197
+msgid "Invalid e-good."
+msgstr ""
+
+#: Controller/EgoodsController.php:304
+msgid "Thank you for purchasing \"<b>%s</b>\", Now you can download it from this page or from your \"My Account\" section"
+msgstr ""
+
+#: Controller/EgoodsController.php:309
+msgid "Unable to process your payment request, Please try again"
+msgstr ""
+
+#: View/EgoodCategories/add.ctp:8
+msgid "New Egood Category"
+msgstr ""
+
+#: View/EgoodCategories/edit.ctp:8
+msgid "Edit Egood Category"
+msgstr ""
+
+#: View/EgoodCategories/index.ctp:10
+msgid "New Category"
+msgstr ""
+
+#: View/EgoodCategories/index.ctp:12
+#: View/Elements/form.ctp:23
+msgid "Egood Category"
+msgstr ""
+
+#: View/EgoodCategories/index.ctp:17
+#: View/EgoodCategories/view.ctp:14
+msgid "Name"
+msgstr ""
+
+#: View/EgoodCategories/index.ctp:18
+msgid "# Egoods"
+msgstr ""
+
+#: View/EgoodCategories/index.ctp:19
+#: View/EgoodCategories/view.ctp:23
+msgid "Added On"
+msgstr ""
+
+#: View/EgoodCategories/index.ctp:20
+#: View/Egoods/listing.ctp:34
+msgid "Date Updated"
+msgstr ""
+
+#: View/EgoodCategories/index.ctp:21
+msgid "Action"
+msgstr ""
+
+#: View/EgoodCategories/index.ctp:27
+#: View/Egoods/index.ctp:35
+#: View/Egoods/library.ctp:26
+#: View/Egoods/listing.ctp:41
+#: View/Egoods/transaction.ctp:28
+msgid "No record found."
+msgstr ""
+
+#: View/EgoodCategories/index.ctp:45
+msgid "Delete this Egoods Category"
+msgstr ""
+
+#: View/EgoodCategories/index.ctp:45
+msgid "Are you sure? You want to delete this Egoods Category."
+msgstr ""
+
+#: View/EgoodCategories/view.ctp:5
+msgid " Edit This"
+msgstr ""
+
+#: View/EgoodCategories/view.ctp:9
+msgid "Egood Category Detail"
+msgstr ""
+
+#: View/EgoodCategories/view.ctp:19
+msgid "Total Egoods"
+msgstr ""
+
+#: View/EgoodCategories/view.ctp:27
+msgid "Updated On"
+msgstr ""
+
+#: View/EgoodCategories/view.ctp:32
+#: View/Elements/categoryform.ctp:18
+#: View/Elements/form.ctp:32
+msgid "Description"
+msgstr ""
+
+#: View/Egoods/add.ctp:8
+msgid "Add E-Good"
+msgstr ""
+
+#: View/Egoods/edit.ctp:8
+msgid "Edit E-Good"
+msgstr ""
+
+#: View/Egoods/index.ctp:16
+#: View/Egoods/listing.ctp:11
+msgid "E-Goods"
+msgstr ""
+
+#: View/Egoods/index.ctp:22
+msgid "in %s Category"
+msgstr ""
+
+#: View/Egoods/index.ctp:74;78
+msgid "View Detail"
+msgstr ""
+
+#: View/Egoods/library.ctp:16
+msgid "My Library"
+msgstr ""
+
+#: View/Egoods/listing.ctp:12
+msgid " Add E-Good"
+msgstr ""
+
+#: View/Egoods/listing.ctp:20
+#: View/Egoods/transaction.ctp:19
+#: View/Elements/form.ctp:28
+msgid "Title"
+msgstr ""
+
+#: View/Egoods/listing.ctp:22
+msgid "Added By"
+msgstr ""
+
+#: View/Egoods/listing.ctp:25
+msgid "Category"
+msgstr ""
+
+#: View/Egoods/listing.ctp:27
+#: View/Elements/paid_form.ctp:6
+msgid "Type"
+msgstr ""
+
+#: View/Egoods/listing.ctp:28
+#: View/Egoods/transaction.ctp:20
+msgid "Price"
+msgstr ""
+
+#: View/Egoods/listing.ctp:31
+msgid "# Download"
+msgstr ""
+
+#: View/Egoods/listing.ctp:32
+#: View/Elements/form.ctp:46
+msgid "Status"
+msgstr ""
+
+#: View/Egoods/listing.ctp:33
+msgid "Date Added"
+msgstr ""
+
+#: View/Egoods/listing.ctp:61
+msgid "N/A"
+msgstr ""
+
+#: View/Egoods/transaction.ctp:12
+msgid "My Transaction"
+msgstr ""
+
+#: View/Egoods/transaction.ctp:21
+msgid "Purchase Date"
+msgstr ""
+
+#: View/Egoods/view.ctp:17
+msgid "E-Goods Detail"
+msgstr ""
+
+#: View/Egoods/view.ctp:19
+#: View/Elements/form.ctp:15
+msgid " Back"
+msgstr ""
+
+#: View/Egoods/view.ctp:34
+msgid "Comments"
+msgstr ""
+
+#: View/Egoods/view.ctp:46
+msgid "Price "
+msgstr ""
+
+#: View/Egoods/view.ctp:56
+msgid "Category : "
+msgstr ""
+
+#: View/Egoods/view.ctp:64
+msgid "Added by "
+msgstr ""
+
+#: View/Egoods/view.ctp:69
+msgid "Added on "
+msgstr ""
+
+#: View/Egoods/view.ctp:77
+msgid "Buy Now"
+msgstr ""
+
+#: View/Egoods/view.ctp:83
+msgid " Download now"
+msgstr ""
+
+#: View/Elements/categoryform.ctp:27
+#: View/Elements/form.ctp:53
+msgid "Cancel"
+msgstr ""
+
+#: View/Elements/downloadCount.ctp:11
+msgid "Be first to Download"
+msgstr ""
+
+#: View/Elements/downloadCount.ctp:13
+msgid "Download"
+msgstr ""
+
+#: View/Elements/downloadCount.ctp:15
+msgid "Downloads"
+msgstr ""
+
+#: View/Elements/form.ctp:37
+msgid "Photo"
+msgstr ""
+
+#: View/Elements/form.ctp:41
+msgid "Attachement"
+msgstr ""
+
+#: Model/Egood.php:validation for field title
+msgid "Please enter Title"
+msgstr ""
+
+#: Model/Egood.php:validation for field description
+msgid "Please enter description"
+msgstr ""
+

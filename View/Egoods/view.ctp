@@ -14,9 +14,9 @@ echo $this->GtwRequire->req($this->Html->url('/', true) . 'GtwEgoods/js/egoods.j
     <div class="panel-heading">
         <div class="row">
             <div class="col-xs-8">
-                <h3 class="title"><?php echo __('E-Goods Detail'); ?></h3>
+                <h3 class="title"><?php echo __d('gtw_egoods','E-Goods Detail'); ?></h3>
             </div>
-            <div class="col-xs-4 text-right"><?php echo $this->Html->actionIconBtn('fa fa-reply', __(' Back'), 'index'); ?></div>
+            <div class="col-xs-4 text-right"><?php echo $this->Html->actionIconBtn('fa fa-reply', __d('gtw_egoods',' Back'), 'index'); ?></div>
         </div>
     </div>
     <div class="panel-body items">
@@ -31,7 +31,7 @@ echo $this->GtwRequire->req($this->Html->url('/', true) . 'GtwEgoods/js/egoods.j
                 ?>
                 <?php if (CakePlugin::loaded('GtwComments')): ?>
                     <div class="egoodComments hidden-sm">
-                        <h3 class="title"><?php echo __('Comments') ?></h3>
+                        <h3 class="title"><?php echo __d('gtw_egoods','Comments') ?></h3>
                         <?php echo $this->element('GtwComments.comment', array('model' => 'Egood', 'refId' => $goods['Egood']['id'])); ?>
                     </div>                    
                 <?php endif; ?>
@@ -43,7 +43,7 @@ echo $this->GtwRequire->req($this->Html->url('/', true) . 'GtwEgoods/js/egoods.j
                 <?php if ($paymentSupport && $goods['Egood']['type']) { ?>
                     <div class="form-group">
                         <?php
-                        echo __("Price ");
+                        echo __d('gtw_egoods',"Price ");
                         echo $this->Stripe->showPrice($goods['Egood']['price']);
                         ?>
                     </div>
@@ -53,7 +53,7 @@ echo $this->GtwRequire->req($this->Html->url('/', true) . 'GtwEgoods/js/egoods.j
                 </div>
                 <div class="form-group">
                     <?php
-                    echo __("Category : ");
+                    echo __d('gtw_egoods',"Category : ");
                     if(!empty($goods['EgoodCategory']['name'])){
 						echo $this->Html->link($goods['EgoodCategory']['name'], array('controller' => 'egoods', 'action' => 'index',0,$goods['EgoodCategory']['id']));
 					}
@@ -61,12 +61,12 @@ echo $this->GtwRequire->req($this->Html->url('/', true) . 'GtwEgoods/js/egoods.j
                 </div>
                 <div class="form-group">
                     <?php
-                    echo __("Added by ");
+                    echo __d('gtw_egoods',"Added by ");
                     echo $this->Html->link($goods['User']['first'] . ' ' . $goods['User']['last'], array('controller' => 'egoods', 'action' => 'index', $goods['User']['id']));
                     ?>
                 </div>
                 <div class="form-group">
-                    <?php echo __("Added on ") . $goods['Egood']['modified'] ?>
+                    <?php echo __d('gtw_egoods',"Added on ") . $goods['Egood']['modified'] ?>
                 </div>                
                 <div class="form-group">
                     <?php
@@ -74,13 +74,13 @@ echo $this->GtwRequire->req($this->Html->url('/', true) . 'GtwEgoods/js/egoods.j
                         echo $this->element('GtwStripe.one_time_fix_payment', array('options' => array(
                                 'description' => $goods['Egood']['title'],
                                 'amount' => $goods['Egood']['price'],
-                                'label' => __('Buy Now'),
+                                'label' => __d('gtw_egoods','Buy Now'),
                                 'success-url' => $this->Html->url(array('plugin' => 'gtw_egoods', 'action' => 'view', $goods['Egood']['slug'], 'type' => 'success'), true),
                                 'fail-url' => $this->Html->url(array('plugin' => 'gtw_egoods', 'action' => 'view', $goods['Egood']['slug'], 'type' => 'fail'), true),
                         )));
                         //echo $this->Html->actionIconBtn('fa fa-shopping-cart', __(' Buy now'), 'buy',array($goods['Egood']['slug']),'btn-danger');
                     } else {
-                        echo $this->Html->actionIconBtn('fa fa-download', __(' Download now'), 'download', array($goods['Egood']['slug']), 'btn-danger');
+                        echo $this->Html->actionIconBtn('fa fa-download', __d('gtw_egoods',' Download now'), 'download', array($goods['Egood']['slug']), 'btn-danger');
                     }
                     ?>
                 </div>

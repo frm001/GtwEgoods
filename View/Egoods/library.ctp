@@ -13,7 +13,7 @@ if($paymentSupport){
 		<div class="row">
             <div class="col-md-8">
                 <h3 class="title">
-                    <?php echo __('My Library');?>
+                    <?php echo __d('gtw_egoods','My Library');?>
                 </h3>
             </div>
             <div class="col-md-4 text-right"></div>
@@ -23,7 +23,7 @@ if($paymentSupport){
         <div class="row">
             <?php if(empty($downloads)):?>
                 <div class="col-md-2 col-sm-4 text-warning">
-                    <?php echo __('No record found.')?>
+                    <?php echo __d('gtw_egoods','No record found.')?>
                 </div>
             <?php else:?>
                 <?php foreach ($downloads as $download):?>

@@ -67,7 +67,7 @@ class EgoodsController extends AppController
         ));
         if(!empty($goods)){
             if($goods['Egood']['type']!=0 && !$this->EgoodSell->checkSell($this->Session->read('Auth.User.id'),$goods['Egood']['id'])){
-                $this->Session->setFlash(__('Invalid Download'), 'alert', array(
+                $this->Session->setFlash(__d('gtw_egoods','Invalid Download'), 'alert', array(
                     'plugin' => 'BoostCake',
                     'class' => 'alert-danger'
                 ));
@@ -89,7 +89,7 @@ class EgoodsController extends AppController
                 exit;
             }
         }
-        $this->Session->setFlash(__('File Not Found'), 'alert', array(
+        $this->Session->setFlash(__d('gtw_egoods','File Not Found'), 'alert', array(
             'plugin' => 'BoostCake',
             'class' => 'alert-danger'
         ));
@@ -115,14 +115,14 @@ class EgoodsController extends AppController
         if ($this->request->is('post') || $this->request->is('put')) {
             $this->request->data['Egood']['user_id'] = $this->Session->read('Auth.User.id');
             if ($this->Egood->save($this->request->data)) {                
-                $this->Session->setFlash(__('The e-good has been created successfully'), 'alert', array(
+                $this->Session->setFlash(__d('gtw_egoods','The e-good has been created successfully'), 'alert', array(
                     'plugin' => 'BoostCake',
                     'class' => 'alert-success'
                 ));
                 $this->EgoodCategory->recursive = -1;
                 return $this->redirect(array('action' => 'listing'));
             }
-            $this->Session->setFlash(__('Unable to add e-good. Please, try again.'), 'alert', array(
+            $this->Session->setFlash(__d('gtw_egoods','Unable to add e-good. Please, try again.'), 'alert', array(
                 'plugin' => 'BoostCake',
                 'class' => 'alert-danger'
             ));
@@ -138,13 +138,13 @@ class EgoodsController extends AppController
         if ($this->request->is('post') || $this->request->is('put')) {
             $this->request->data['Egood']['id'] = $eGoodId;
             if ($this->Egood->save($this->request->data)) {
-                $this->Session->setFlash(__('The e-good has been saved'), 'alert', array(
+                $this->Session->setFlash(__d('gtw_egoods','The e-good has been saved'), 'alert', array(
                     'plugin' => 'BoostCake',
                     'class' => 'alert-success'
                 ));
                 return $this->redirect(array('action' => 'listing'));
             }
-            $this->Session->setFlash(__('The e-good could not be saved. Please, try again.'), 'alert', array(
+            $this->Session->setFlash(__d('gtw_egoods','The e-good could not be saved. Please, try again.'), 'alert', array(
                 'plugin' => 'BoostCake',
                 'class' => 'alert-danger'
             ));
@@ -160,12 +160,12 @@ class EgoodsController extends AppController
         $eGoodId = $this->__checkExist($slug);
         $this->Egood->id =$eGoodId;
         if($this->Egood->saveField('status',2)){
-            $this->Session->setFlash(__('E-Good has been deleted successfully'), 'alert', array(
+            $this->Session->setFlash(__d('gtw_egoods','E-Good has been deleted successfully'), 'alert', array(
                     'plugin' => 'BoostCake',
                     'class' => 'alert-success'
                 ));
         }else{
-            $this->Session->setFlash(__('Unable to delete e-good, Please try again'), 'alert', array(
+            $this->Session->setFlash(__d('gtw_egoods','Unable to delete e-good, Please try again'), 'alert', array(
                     'plugin' => 'BoostCake',
                     'class' => 'alert-danger'
                 ));
@@ -178,12 +178,12 @@ class EgoodsController extends AppController
         if(in_array($status, $arrStatus)){
             $this->Comment->id = $commentId;
             $this->Comment->saveField('status',$arrStatus[$status]);
-            $this->Session->setFlash(__('Comment status has been successfully changed to '.$status), 'alert', array(
+            $this->Session->setFlash(__d('gtw_egoods','Comment status has been successfully changed to %s', $status), 'alert', array(
                     'plugin' => 'BoostCake',
                     'class' => 'alert-success'
                 ));
         }else{
-            $this->Session->setFlash(__('Invalid Type, Pleae try again'), 'alert', array(
+            $this->Session->setFlash( __d('gtw_egoods', 'Invalid Type, Pleae try again'), 'alert', array(
                     'plugin' => 'BoostCake',
                     'class' => 'alert-danger'
                 ));
@@ -194,7 +194,7 @@ class EgoodsController extends AppController
     {
         $eGood = $this->Egood->find('first',array('fields'=>array('Egood.id','Egood.slug'),'conditions'=>array('slug'=>$slug)));
         if (empty($eGood)) {
-            $this->Session->setFlash(__('Invalid e-good.'), 'alert', array(
+            $this->Session->setFlash( __d('gtw_egoods','Invalid e-good.'), 'alert', array(
                     'plugin' => 'BoostCake',
                     'class' => 'alert-danger'
                 ));
@@ -301,12 +301,12 @@ class EgoodsController extends AppController
                 $transaction = $this->Transac->getLastTransaction($this->request->named['transaction']);
                 if(!empty($transaction)){
                     $this->EgoodSell->addToSell($transaction['Transaction'],$goods['Egood']['id']);
-                     $this->Session->setFlash( __('Thank you for purchasing "<b>%s</b>", Now you can download it from this page or from your "My Account" section', $goods['Egood']['title']), 'alert', array(
+                     $this->Session->setFlash(  __d('gtw_egoods','Thank you for purchasing "<b>%s</b>", Now you can download it from this page or from your "My Account" section', $goods['Egood']['title']), 'alert', array(
                         'plugin' => 'BoostCake',
                         'class' => 'alert-success'
                     ));
                 }else{
-                    $this->Session->setFlash(__('Unable to process your payment request, Please try again'), 'alert', array(
+                    $this->Session->setFlash( __d('gtw_egoods','Unable to process your payment request, Please try again'), 'alert', array(
                     'plugin' => 'BoostCake',
                     'class' => 'alert-danger'
                 )); 

@@ -5,4 +5,4 @@
  * @link      http://gintonicweb.com
  */
 ?>
-<?php echo $this->element('GtwEgoods.categoryform',array('type'=>'add','title'=>__('New Egood Category')));?>
+<?php echo $this->element('GtwEgoods.categoryform',array('type'=>'add','title'=>__d('gtw_egoods','New Egood Category')));?>
