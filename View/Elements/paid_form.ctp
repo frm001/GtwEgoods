@@ -3,7 +3,7 @@ if($paymentSupport):
     echo $this->Form->input('type',array(
         'options' => $type,
         'type' =>'radio',
-        'before'=>'<label for="EgoodType">'.__('Type').'</label>',
+        'before'=>'<label for="EgoodType">'. __d('gtw_egoods', 'Type').'</label>',
         'class'=>'btn btn-default',
         'legend'=>false
     ));

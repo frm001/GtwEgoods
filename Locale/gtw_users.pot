@@ -1,0 +1,36 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2015-03-06 14:38-0500\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: Plugin/GtwUsers/Model/User.php:validation for field first
+msgid "First name is required"
+msgstr ""
+
+#: Plugin/GtwUsers/Model/User.php:validation for field last
+msgid "Last name is required"
+msgstr ""
+
+#: Plugin/GtwUsers/Model/User.php:validation for field email
+msgid "An email address is required"
+msgstr ""
+
+#: Plugin/GtwUsers/Model/User.php:validation for field email
+msgid "Email address already exists"
+msgstr ""
+
+#: Plugin/GtwUsers/Model/User.php:validation for field password
+msgid "A password is required"
+msgstr ""
+

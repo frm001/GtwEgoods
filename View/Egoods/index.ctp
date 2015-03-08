@@ -13,13 +13,13 @@ if($paymentSupport){
         <div class="row">
             <div class="col-md-8">
                 <h3 class="title">
-                    <?php echo __('E-Goods');?>
+                    <?php echo __d('gtw_egoods','E-Goods');?>
                     <small>
                         <?php 
                             if(!empty($user)){
                                 echo $user['User']['first'].' '.$user['User']['last'];
                             } elseif(!empty($egoodCategory)){
-								echo 'in '.$egoodCategory['EgoodCategory']['name'] .' Category';
+								echo __d('gtw_egoods','in %s Category', $egoodCategory['EgoodCategory']['name']);
 							}
                         ?>
                     </small>
@@ -32,7 +32,7 @@ if($paymentSupport){
         <div class="row">
             <?php if(empty($goods)):?>
                 <div class="col-md-2 col-sm-4 text-warning">
-                    <?php echo __('No record found.')?>
+                    <?php echo __d('gtw_egoods','No record found.')?>
                 </div>
             <?php else:?>
                 <?php foreach ($goods as $good):?>
@@ -71,11 +71,11 @@ if($paymentSupport){
                                         ?>
                                     </div>
                                     <div class="button pull-right">
-                                        <?php echo $this->Html->actionBtn(__('View Detail'), 'view',array($good['Egood']['slug']),'btn-primary btn-sm')?>
+                                        <?php echo $this->Html->actionBtn(__d('gtw_egoods','View Detail'), 'view',array($good['Egood']['slug']),'btn-primary btn-sm')?>
                                     </div>
                                 <?php }else{?>
                                     <div class="button">
-                                        <?php echo $this->Html->actionBtn(__('View Detail'), 'view',array($good['Egood']['slug']),'btn-primary btn-sm btn-block')?>
+                                        <?php echo $this->Html->actionBtn(__d('gtw_egoods','View Detail'), 'view',array($good['Egood']['slug']),'btn-primary btn-sm btn-block')?>
                                     </div>
                                 <?php }?>                                
                                 <div class="clearfix"></div>

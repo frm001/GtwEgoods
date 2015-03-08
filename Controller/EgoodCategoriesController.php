@@ -25,13 +25,13 @@ class EgoodCategoriesController extends AppController
         if ($this->request->is('post')) {
             $this->EgoodCategory->create();
             if ($this->EgoodCategory->save($this->request->data)) {
-                $this->Session->setFlash(__('The egood category has been created successfully'), 'alert', array(
+                $this->Session->setFlash(__d('gtw_egoods','The egood category has been created successfully'), 'alert', array(
                     'plugin' => 'BoostCake',
                     'class' => 'alert-success'
                 ));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('Unable to create egood category. Please, try again.'), 'alert', array(
+                $this->Session->setFlash(__d('gtw_egoods','Unable to create egood category. Please, try again.'), 'alert', array(
                     'plugin' => 'BoostCake',
                     'class' => 'alert-danger'
                 ));
@@ -43,13 +43,13 @@ class EgoodCategoriesController extends AppController
         if ($this->request->is('post') || $this->request->is('put')) {
             $this->request->data['EgoodCategory']['id'] = $egoodCategoryId;
             if ($this->EgoodCategory->save($this->request->data)) {
-                $this->Session->setFlash(__('The egood category has been updated successfully'), 'alert', array(
+                $this->Session->setFlash(____d('gtw_egoods','The egood category has been updated successfully'), 'alert', array(
                     'plugin' => 'BoostCake',
                     'class' => 'alert-success'
                 ));
                 return $this->redirect(array('action' => 'index'));
             }
-            $this->Session->setFlash(__('The egood category could not be update. Please, try again.'), 'alert', array(
+            $this->Session->setFlash(____d('gtw_egoods','The egood category could not be update. Please, try again.'), 'alert', array(
                 'plugin' => 'BoostCake',
                 'class' => 'alert-danger'
             ));
@@ -63,14 +63,14 @@ class EgoodCategoriesController extends AppController
         $this->EgoodCategory->recursive = -1;
         if (!empty($egoodCategoryId)) {
             if ($this->EgoodCategory->delete($egoodCategoryId)) {
-                $this->Session->setFlash(__('Egood category has been deleted successfully'), 'alert', array(
+                $this->Session->setFlash(__d('gtw_egoods','Egood category has been deleted successfully'), 'alert', array(
                     'plugin' => 'BoostCake',
                     'class' => 'alert-success'
                 ));
                 $this->redirect($this->referer());
             }
         }
-        $this->Session->setFlash(__('Unable to delete egood category, Please try again'), 'alert', array(
+        $this->Session->setFlash(__d('gtw_egoods','Unable to delete egood category, Please try again'), 'alert', array(
             'plugin' => 'BoostCake',
             'class' => 'alert-danger'
         ));

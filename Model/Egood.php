@@ -7,6 +7,9 @@
 App::uses('Folder', 'Utility');
 App::uses('File', 'Utility');
 class Egood extends AppModel {
+
+	public $validationDomain = 'gtw_egoods';
+	
     public $validate = array(
         'title' => array(
             'required' => array(

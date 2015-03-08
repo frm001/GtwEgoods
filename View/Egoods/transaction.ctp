@@ -9,23 +9,23 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="row">
-            <div class="col-md-8"><h3 class="title"><?php echo __('My Transaction');?></h3></div>
+            <div class="col-md-8"><h3 class="title"><?php echo  __d('gtw_egoods','My Transaction');?></h3></div>
             <div class="col-md-4 text-right"></div>
         </div>
     </div>    
     <table class="table table-hover table-striped table-bordered">
         <thead>
             <tr>
-                <th width='55%'><?php echo $this->Paginator->sort('title'); ?></th>
-                <th width='15%' class='text-right'><?php echo $this->Paginator->sort('price'); ?></th>
-                <th width='15%'><?php echo $this->Paginator->sort('created', __('Purchase Date')); ?></th>
+                <th width='55%'><?php echo $this->Paginator->sort('title',  __d('gtw_egoods','Title')); ?></th>
+                <th width='15%' class='text-right'><?php echo $this->Paginator->sort('price', __d('gtw_egoods','Price')); ?></th>
+                <th width='15%'><?php echo $this->Paginator->sort('created', __d('gtw_egoods','Purchase Date')); ?></th>
                 <th width='15%' class='text-center'>Action</th>
             </tr>
         </thead>
         <tbody>
             <?php if(empty($sells)){?>
                 <tr>
-                    <td colspan='4' class='text-warning'><?php echo __('No record found.')?></td>
+                    <td colspan='4' class='text-warning'><?php echo __d('gtw_egoods','No record found.')?></td>
                 </tr>
             <?php 
                 }else{
