@@ -16,15 +16,15 @@ msgstr ""
 
 #: Controller/EgoodCategoriesController.php:28
 msgid "The egood category has been created successfully"
-msgstr ""
+msgstr "La catégorie egood a été créé avec succès"
 
 #: Controller/EgoodCategoriesController.php:34
 msgid "Unable to create egood category. Please, try again."
-msgstr ""
+msgstr "Impossible de créer la catégorie egood. s’il vous plaît, essayez de nouveau ."
 
 #: Controller/EgoodCategoriesController.php:66
 msgid "Egood category has been deleted successfully"
-msgstr ""
+msgstr "Catégorie Egood a été supprimé avec succès"
 
 #: Controller/EgoodCategoriesController.php:73
 msgid "Unable to delete egood category, Please try again"
