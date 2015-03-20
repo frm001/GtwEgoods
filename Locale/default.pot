@@ -16,9 +16,9 @@ msgstr ""
 
 #: Plugin/GtwEditBoxes/Model/EditBox.php:validation for field name
 msgid "A name is required"
-msgstr ""
+msgstr "Un nom est nécessaire"
 
 #: Plugin/GtwEditBoxes/Model/EditBox.php:validation for field name
 msgid "Name is already used"
-msgstr ""
+msgstr "Nom est déjà utilisé"
 
